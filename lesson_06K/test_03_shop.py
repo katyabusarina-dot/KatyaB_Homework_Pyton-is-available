@@ -44,7 +44,8 @@ def test_shop(driver):
     total_text = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.CLASS_NAME, "summary_total_label"))
         )
-    total_text = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
+    total_text = wait.until(EC.visibility_of_element_located(
+        (By.CLASS_NAME, "summary_total_label")))
     driver.execute_script("arguments[0].scrollIntoView();", total_text),
     print(f"Получена итоговая стоимость: {total_text}")
 
