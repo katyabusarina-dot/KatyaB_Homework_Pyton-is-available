@@ -63,8 +63,6 @@ def test_form(driver):
         wait.until(EC.presence_of_element_located(locator))
         print(f"Элемент с локатором {locator} найден.")
         elements = driver.find_elements(*locator)
-
-    border_color = elements.value_of_css_property('border-color')
-
-    assert border_color == 'rgb(186, 219, 204)'
-    driver.save_screenshot("screenshots/color_green.png")
+        border_color = elements.value_of_css_property('border-color')
+        assert border_color == 'rgb(186, 219, 204)'
+        driver.save_screenshot("screenshots/color_green.png")
