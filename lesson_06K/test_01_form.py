@@ -4,22 +4,26 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 @pytest.fixture
 def driver():
-    driver = webdriver.Edge()
     yield driver
     driver.quit()
 
 
 def test_form(driver):
-# Открыть страницу https://bonigarcia.dev/selenium-webdriver-java/data-types.html
-# в браузерер
+    driver = webdriver.Edge()
+
+# Открыть страницу https://bonigarcia.dev/selenium-"
+#     "webdriver-java/data-types.html в браузер
     wait = WebDriverWait(driver, 60)
-    driver.get("https://bonigarcia.dev/" \
-    "selenium-webdriver-java/data-types.html")
+    driver.get(
+        "https://bonigarcia.dev/selenium-webdriver-java/data-types.html"
+    )
 
 # Заполните форму значениями:
-    wait.until(EC.visibility_of_element_located((By.NAME, "first-name"))).send_keys("Иван")
+    wait.until(EC.visibility_of_element_located(
+         (By.NAME, "first-name"))).send_keys("Иван")
     driver.find_element(By.NAME, "last-name").send_keys("Петров")
     driver.find_element(By.NAME, "address").send_keys("Ленина, 55-3")
     driver.find_element(By.NAME, "e-mail").send_keys("test@skypro.com")
@@ -48,20 +52,19 @@ def test_form(driver):
         (By.NAME, "address"),
         (By.NAME, "e-mail"),
         (By.NAME, "phone"),
-        (By.NAME,"city"),
+        (By.NAME, "city"),
         (By.NAME, "country"),
         (By.NAME, "job-position"),
         (By.NAME, "company")
     ]
     wait.until(EC.presence_of_all_elements_located(valid_fields_locators))
-    
+
     for locator in valid_fields_locators:
         wait.until(EC.presence_of_element_located(locator))
         print(f"Элемент с локатором {locator} найден.")
         elements = driver.find_elements(*locator)
-        
+
     border_color = elements.value_of_css_property('border-color')
-    
+
     assert border_color == 'rgb(186, 219, 204)'
     driver.save_screenshot("screenshots/color_green.png")
-        

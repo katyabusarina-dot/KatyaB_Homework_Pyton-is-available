@@ -4,15 +4,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+
 @pytest.fixture
 def driver():
     yield driver
+
 
 def test_shop(driver):
     options = webdriver.FirefoxOptions()
     driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 10)
-    
+
 # Откройте сайт магазина: https://www.saucedemo.com/ в FireFox.
     driver.get("https://www.saucedemo.com/")
 
@@ -55,5 +57,5 @@ def test_shop(driver):
 
 # Проверьте, что итоговая сумма равна $58.29
     assert total_text.text == 'Total: $58.29'
-    
+
     driver.quit()
