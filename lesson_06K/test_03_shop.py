@@ -1,16 +1,9 @@
-import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-
-@pytest.fixture
-def driver():
-    yield driver
-
-
-def test_shop(driver):
+def test_shop():
     options = webdriver.FirefoxOptions()
     driver = webdriver.Firefox(options=options)
     wait = WebDriverWait(driver, 10)

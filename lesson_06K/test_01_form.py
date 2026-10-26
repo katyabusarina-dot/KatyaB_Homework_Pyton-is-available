@@ -6,7 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 def test_form():
     # Для локального запуска можно заменить на webdriver.Chrome()
     driver = webdriver.Edge() 
-    wait = WebDriverWait(driver, 10)
+    driver.maximize_window() 
+    wait = WebDriverWait(driver, 20)
     
     driver.get("https://bonigarcia.dev/selenium-webdriver-java/data-types.html")
 
@@ -24,7 +25,7 @@ def test_form():
     # Нажимаем Submit
     button = wait.until(EC.element_to_be_clickable(
         (By.CSS_SELECTOR, "button[type='submit']")))
-    driver.execute_script("arguments[0].scrollIntoView();", button)
+    driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", button)
     button.click()
 
     # ЖДЕМ, пока страница перестроится и поле появится
