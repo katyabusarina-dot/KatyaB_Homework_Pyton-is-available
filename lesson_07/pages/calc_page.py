@@ -1,3 +1,5 @@
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
 
@@ -15,11 +17,13 @@ class CalculatorPage:
         delay_field.clear()
         delay_field.send_keys(delay_time)
 
-    def click_button(self,):
-        button = self.driver.find_element(*self.BUTTON_CALC)
-        button.click()
+    def click_button(self, button_text):
+        locator = (By.XPATH, f"//span[text()='{button_text}']")
+        self.driver.find_element(*locator).click()
 
     def get_result(self):
-        result_field = self.driver.EC.text_to_be_present_in_element(
-            self.RESULT)
-        return result_field.text
+        WebDriverWait(self.driver, 50).until(
+            EC.text_to_be_present_in_element((By.CLASS_NAME, "screen"), "15")
+        )
+
+        return self.driver.find_element(*self.RESULT).text
