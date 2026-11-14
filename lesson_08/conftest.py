@@ -1,16 +1,17 @@
 import os
 import pytest
 import requests
+from dotenv import load_dotenv
 
+load_dotenv()
 
 base_url = "https://ru.yougile.com/api-v2"
 
 
 @pytest.fixture(scope="session")
 def api_key():
-    """API-ключ из переменной окружения — не храним секреты в коде."""
     key = os.environ.get("API_KEY")
-    assert key, "Задайте переменную окружения YOUGILE_API_KEY"
+    assert key, "Задайте переменную окружения API_KEY"
     return key
 
 
@@ -27,16 +28,13 @@ def api_client(api_key):
 user_id = "b60fe264-8a08-43ae-ba8a-52f10cb4351e"
 payload = {
     "title": "Создание ДЗ",
-    "users": {
-        user_id: {"role": "admin"},
-    },
-}
+    "user_id": "admin"}
 
 
-@pytest.fixture()
+@pytest.fixture
 def pro_id(api_client):
-    resp = requests.post(f"{base_url}/projects", api_client, json=payload)
-    assert resp.status_code == 201
+    resp = api_client.post(f"{base_url}/projects", json=payload)
+    assert resp.status_code == 201, resp.text
     project_id = resp.json()["id"]
     yield project_id
-    requests.delete(f"{base_url}/projects/{project_id}")
+    api_client.put(f"{base_url}/projects/{project_id}", json={"deleted": True})
