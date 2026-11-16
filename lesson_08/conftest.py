@@ -28,7 +28,7 @@ def api_client(api_key):
 user_id = "b60fe264-8a08-43ae-ba8a-52f10cb4351e"
 payload = {
     "title": "Создание ДЗ",
-    "user_id": "admin"}
+    "users": {user_id: "admin"}}
 
 
 @pytest.fixture

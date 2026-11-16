@@ -7,11 +7,11 @@ def test_create_project(api_client):
     assert resp.status_code == 400, resp.text
 
 
-def test_get_project(api_client, pro_id):
-    resp = api_client.get(f"{base_url}/projects/{pro_id}")
-    assert resp.status_code == 401, resp.text
+def test_get_project(api_client):
+    resp = api_client.get(f"{base_url}/projects/enkrjvn43")
+    assert resp.status_code == 404, resp.text
 
 
-def test_delete_project(api_client, pro_id):
-    resp = api_client.put(f"{base_url}/projects/{pro_id}", json={})
-    assert resp.status_code == 400, resp.text
+def test_delete_project(api_client):
+    resp = api_client.put(f"{base_url}/projects/enkrjvn43", json={})
+    assert resp.status_code == 404, resp.text
