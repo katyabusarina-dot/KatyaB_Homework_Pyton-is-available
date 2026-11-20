@@ -10,8 +10,11 @@ db_connection_string = "postgresql://postgres:123@localhost:5432/postgres"
 def db():
     """Создаёт движок и соединение, после теста закрывает соединение."""
     engine = create_engine(db_connection_string)
-    with engine.connect() as connection:
-        yield connection
+    connection = engine.connect()
+    transaction = connection.begin()
+    yield connection
+    transaction.rollback()   # ← вот очистка: любые изменения теста отменяются
+    connection.close()
     engine.dispose()
 
 
