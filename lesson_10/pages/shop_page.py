@@ -13,7 +13,7 @@ class LoginPage:
         self.PASSWORD = (By.ID, "password")
         self.LOGIN_BUTTON = (By.ID, "login-button")
 
-    @allure.step("Авторизоваться под standard_user")
+    @allure.step("Авторизоваться под standard_user{username}-{password}")
     def login(self, username, password):
         username_field = self.wait.until(
             EC.visibility_of_element_located(self.USERNAME))
@@ -40,7 +40,7 @@ class MainPage:
         self.ONESIE = (By.NAME, "add-to-cart-sauce-labs-onesie")
         self.CART_CONTAINER = (By.CSS_SELECTOR, ".shopping_cart_container")
 
-    @allure.step("Добавьте в корзину три товара")
+    @allure.step("Добавьте в корзину три товара{product_locator}")
     def add_to_cart(self, product_locator):
         button = self.driver.find_element(*product_locator)
         button.click()
@@ -75,7 +75,7 @@ class CheckoutPage:
         self.CONTINUE = (By.ID, "continue")
         self.TOTAL = (By.CLASS_NAME, "summary_total_label")
 
-    @allure.step("Заполните форму")
+    @allure.step("Заполните форму{first_name}-{last_name}-{postal_code}")
     def fill_form(self, first_name, last_name, postal_code):
         first_name = self.driver.find_element(
             *self.FIRST_NAME).send_keys(first_name)
