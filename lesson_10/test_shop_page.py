@@ -6,7 +6,7 @@ import allure
 @allure.title("Интернет_магазин")
 @allure.feature("Оформление заказа")
 @allure.description("Итоговая стоимость корзины из трёх товаров равна $58.29")
-@allure.severity("CRITIKAL")
+@allure.severity("CRITIСAL")
 def test_shop():
     options = webdriver.FirefoxOptions()
     driver = webdriver.Firefox(options=options)
@@ -20,7 +20,7 @@ def test_shop():
             login_page.login("standard_user", "secret_sauce")
 
         with allure.step("Добавьте в корзину три товара и " \
-        "перейдите в корзинуp"):
+        "перейдите в корзину"):
             main_page = MainPage(driver)
             main_page.add_to_cart(main_page.BACKPACK)
             main_page.add_to_cart(main_page.BOLT_T_SHIRT)

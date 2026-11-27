@@ -13,8 +13,8 @@ class LoginPage:
         self.PASSWORD = (By.ID, "password")
         self.LOGIN_BUTTON = (By.ID, "login-button")
 
-    @allure.step("Авторизоваться под standard_user{username}-{password}")
-    def login(self, username, password):
+    @allure.step("Авторизоваться под standard_user {username} - {password}")
+    def login(self, username: str, password: str) -> "LoginPage":
         username_field = self.wait.until(
             EC.visibility_of_element_located(self.USERNAME))
         username_field.clear()
@@ -40,13 +40,13 @@ class MainPage:
         self.ONESIE = (By.NAME, "add-to-cart-sauce-labs-onesie")
         self.CART_CONTAINER = (By.CSS_SELECTOR, ".shopping_cart_container")
 
-    @allure.step("Добавьте в корзину три товара{product_locator}")
-    def add_to_cart(self, product_locator):
+    @allure.step("Добавьте в корзину три товара {product_locator}")
+    def add_to_cart(self, product_locator: tuple) -> None:
         button = self.driver.find_element(*product_locator)
         button.click()
 
     @allure.step("Перейти в корзину")
-    def go_to_cart(self):
+    def go_to_cart(self) -> None:
         cart_btn = self.driver.find_element(*self.CART_CONTAINER)
         cart_btn.click()
 
@@ -58,7 +58,7 @@ class CartPage:
         self.CHECKOUT_BUTTON = (By.ID, "checkout")
 
     @allure.step("Перейдите к оформлению")
-    def checkout(self):
+    def checkout(self) -> "CartPage":
         checkout_btn = self.wait.until(
             EC.element_to_be_clickable(self.CHECKOUT_BUTTON))
         checkout_btn.click()
@@ -75,8 +75,8 @@ class CheckoutPage:
         self.CONTINUE = (By.ID, "continue")
         self.TOTAL = (By.CLASS_NAME, "summary_total_label")
 
-    @allure.step("Заполните форму{first_name}-{last_name}-{postal_code}")
-    def fill_form(self, first_name, last_name, postal_code):
+    @allure.step("Заполните форму {first_name} - {last_name} - {postal_code}")
+    def fill_form(self, first_name: str, last_name: str, postal_code: str) -> None:
         first_name = self.driver.find_element(
             *self.FIRST_NAME).send_keys(first_name)
         last_name = self.driver.find_element(
@@ -86,7 +86,7 @@ class CheckoutPage:
         self.driver.find_element(*self.CONTINUE).click()
 
     @allure.step("Прочитайте итоговую стоимость")
-    def verify_total(self):
+    def verify_total(self) -> str:
         total_element = self.wait.until(
             EC.visibility_of_element_located(self.TOTAL))
         return total_element.text
